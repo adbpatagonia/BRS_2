@@ -107,6 +107,10 @@ p.dose.response <-
   theme(legend.title = element_blank(),
         legend.position = 'bottom')
 
+# parameters ------
+
+ED(m.dr.nottravel, c(5, 10, 50, 75, 90), interval = "delta")
+ED(m.dr.travel, c(5, 10, 50, 75, 90), interval = "delta")
 # output -----
 ggsave(plot = p.dose.response, filename = 'output/dose_response_plot_excludeoutlier.png', height = 8, width = 13)
 
