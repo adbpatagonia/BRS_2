@@ -107,10 +107,23 @@ p.dose.response <-
   theme(legend.title = element_blank(),
         legend.position = 'bottom')
 
+ed50_notravel <- ED(m.dr.nottravel, c(50), interval = "delta")
+ed50_notravel <- ed50_notravel[1,1]
+ed50_travel <- ED(m.dr.travel, c(50), interval = "delta")
+ed50_travel <- ed50_travel[1,1]
+
+ggplot_build(p.dose.response)$data
+
+p.dose.response_ed50 <- p.dose.response +
+  geom_vline(xintercept = ed50_notravel, lty = 2, color = '#F8766D') +
+  geom_vline(xintercept = ed50_travel, lty = 2, color = '#00BFC4')  +
+  annotate(geom="text", x=118.5, y=.94, label="ED50",
+           color="black", angle = 90)
 # parameters ------
 
 ED(m.dr.nottravel, c(5, 10, 50, 75, 90), interval = "delta")
 ED(m.dr.travel, c(5, 10, 50, 75, 90), interval = "delta")
 # output -----
 ggsave(plot = p.dose.response, filename = 'output/dose_response_plot_excludeoutlier.png', height = 8, width = 13)
+ggsave(plot = p.dose.response_ed50, filename = 'output/dose_response_plot_excludeoutlier_ed50.png', height = 8, width = 13)
 
